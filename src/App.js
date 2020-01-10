@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
+import DonateCard from './component/donateCard';
 
 import { summaryDonations } from './helpers';
 
@@ -78,6 +79,7 @@ export default connect((state) => state)(
           <p>All donations: {donate}</p>
           <p style={style}>{message}</p>
           {cards}
+          <DonateCard/>
         </div>
       );
     }
