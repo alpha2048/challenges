@@ -1,10 +1,12 @@
 import React, { Component} from 'react';
 //import style from './donateCard.css';
 
-const style = {
+import image_id1 from '../../public/images/baan-kru-noi.jpg';
+
+const style_layout = {
   backgroundColor: 'aqua',
-  width: 400,
-  height: 300,
+  width: 600,
+  height: 400,
   borderRadius: 4 };
 
 export default class DonateCard extends Component {
@@ -14,9 +16,8 @@ export default class DonateCard extends Component {
 
   render() {
     return (
-      <div style={style}>
-        {/*<img src="../../public/images/baan-kru-noi.jpg"/>*/}
-        {/*<img src={require('../../public/images/baan-kru-noi.jpg')}/>*/}
+      <div style={style_layout}>
+        <img src={image_id1} alt="Logo" />
         <div>
           test
         </div>
