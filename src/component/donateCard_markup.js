@@ -1,10 +1,11 @@
 //TODO: change to CSS file
 
 export const style_layout = {
-  backgroundColor: 'aqua',
+  backgroundColor: 'white',
   width: 450,
-  height: 300,
-  borderRadius: 4,
+  height: 310,
+  borderRadius: 8,
+  boxShadow: '0 0 16px gray',
 };
 
 export const style_image = {
@@ -23,12 +24,12 @@ export const style_description = {
 
 export const style_description__text = {
   fontWeight: 600,
-  color: 'black',
-  fontSize: 14,
+  color: 'gray',
+  fontSize: 16,
 };
 
 export const style_description__button = {
-  border: '1px solid blue',
+  border: '2px solid blue',
   color: 'blue',
   fontSize: 14,
   backgroundColor: 'white',
@@ -37,4 +38,6 @@ export const style_description__button = {
   paddingTop: 4,
   paddingBottom: 4,
   fontWeight: 600,
+  borderRadius: 4,
+  cursor: 'pointer',
 };

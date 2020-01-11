@@ -15,16 +15,25 @@ export default class DonateCard extends Component {
     super(props);
   }
 
+  componentDidMount() {
+  }
+
+  onClickDonate() {
+    if (!window.confirm('do you donate?')) return false;
+
+    //donate processing
+  }
+
   render() {
     return (
       <div style={style_layout}>
         <img style={style_image} src={image_id1} alt="Logo" />
         <div style={style_description}>
           <div style={style_description__text}>
-            test of test
+            Baan Kru Noi
           </div>
 
-          <div style={style_description__button}>
+          <div style={style_description__button} onClick={this.onClickDonate.bind(this)}>
             donate
           </div>
         </div>
