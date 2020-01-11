@@ -1,6 +1,7 @@
 //TODO: change to CSS file
 
 export const style_layout = {
+  position: 'relative',
   backgroundColor: 'white',
   width: 450,
   height: 310,
@@ -39,5 +40,28 @@ export const style_description__button = {
   paddingBottom: 4,
   fontWeight: 600,
   borderRadius: 4,
+  cursor: 'pointer',
+};
+
+export const style_payment_layout = {
+  position: 'absolute',
+  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+  width: 450,
+  height: 310,
+  padding: 16,
+  boxSizing: 'border-box',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+};
+
+export const style_payment_layout__close_layout = {
+  display: 'flex',
+  flexDirection: 'row-reverse',
+};
+
+export const style_payment_layout__close_button = {
+  fontSize: 16,
+  color: 'black',
   cursor: 'pointer',
 };
