@@ -1,14 +1,13 @@
 import React, { Component} from 'react';
-//import style from './donateCard.css';
 import {
-  style_layout,
-  style_image,
-  style_description,
-  style_description__button,
-  style_description__text,
-  style_payment_layout,
-  style_payment_layout__close_layout,
-  style_payment_layout__close_button,
+  Layout,
+  Image,
+  PaymentLayout,
+  PaymentLayout__Close_Button,
+  PaymentLayout__Close_Layout,
+  Description,
+  Description__Text,
+  Description__Button,
 } from './donateCard_markup';
 
 import image_id1 from '../../public/images/baan-kru-noi.jpg';
@@ -44,30 +43,30 @@ export default class DonateCard extends Component<> {
 
   render() {
     return (
-      <div style={style_layout}>
+      <Layout>
         {this.state.openPaymentScreen && (
-          <div style={style_payment_layout}>
-            <div style={style_payment_layout__close_layout}>
-              <div style={style_payment_layout__close_button} onClick={this.onClickClosePay.bind(this)}>
+          <PaymentLayout>
+            <PaymentLayout__Close_Layout>
+              <PaymentLayout__Close_Button onClick={this.onClickClosePay.bind(this)}>
                   ×
-              </div>
-            </div>
-            <div style={style_description__button} onClick={this.onClickPay.bind(this)}>
+              </PaymentLayout__Close_Button>
+            </PaymentLayout__Close_Layout>
+            <Description__Button onClick={this.onClickPay.bind(this)}>
                 pay
-            </div>
-          </div>
+            </Description__Button>
+          </PaymentLayout>
         )}
-        <img style={style_image} src={image_id1} alt="Logo" />
-        <div style={style_description}>
-          <div style={style_description__text}>
+        <Image src={image_id1} alt="Logo" />
+        <Description>
+          <Description__Text>
             Baan Kru Noi
-          </div>
+          </Description__Text>
 
-          <div style={style_description__button} onClick={this.onClickDonate.bind(this)}>
+          <Description__Button onClick={this.onClickDonate.bind(this)}>
             donate
-          </div>
-        </div>
-      </div>
+          </Description__Button>
+        </Description>
+      </Layout>
     );
   }
 }

@@ -1,67 +1,64 @@
-//TODO: change to CSS file
+import styled from 'styled-components';
 
-export const style_layout = {
-  position: 'relative',
-  backgroundColor: 'white',
-  width: 450,
-  height: 310,
-  borderRadius: 8,
-  boxShadow: '0 0 16px gray',
-};
+export const Layout = styled.div`
+  position: relative;
+  background-color: white;
+  width: 450px;
+  height: 310px;
+  border-radius: 8px;
+  box-shadow: 0 0 16px gray;
+`;
 
-export const style_image = {
-  maxWidth: '100%',
-  height: 'auto',
-  width: 'auto',
-};
+export const Image = styled.img`
+  max-width: 100%;
+  height: auto;
+  width: auto;
+`;
 
-export const style_description = {
-  display: 'flex',
-  flexDirection: 'row',
-  padding: 16,
-  justifyContent: 'space-between',
-  alignItems: 'center',
-};
+export const Description = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+`;
 
-export const style_description__text = {
-  fontWeight: 600,
-  color: 'gray',
-  fontSize: 16,
-};
+export const Description__Text = styled.div`
+  color: gray;
+  font-weight: 600;
+  font-size: 16px;
+`;
 
-export const style_description__button = {
-  border: '2px solid blue',
-  color: 'blue',
-  fontSize: 14,
-  backgroundColor: 'white',
-  paddingLeft: 8,
-  paddingRight: 8,
-  paddingTop: 4,
-  paddingBottom: 4,
-  fontWeight: 600,
-  borderRadius: 4,
-  cursor: 'pointer',
-};
+export const Description__Button = styled.div`
+  border: 2px solid blue;
+  color: blue;
+  font-size: 14px;
+  background-color: white;
+  padding: 4px 8px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+`;
 
-export const style_payment_layout = {
-  position: 'absolute',
-  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-  width: 450,
-  height: 310,
-  padding: 16,
-  boxSizing: 'border-box',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-};
+export const PaymentLayout = styled.div`
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.95);
+  width: 450px;
+  height: 310px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
-export const style_payment_layout__close_layout = {
-  display: 'flex',
-  flexDirection: 'row-reverse',
-};
+export const PaymentLayout__Close_Layout = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
 
-export const style_payment_layout__close_button = {
-  fontSize: 16,
-  color: 'black',
-  cursor: 'pointer',
-};
+export const PaymentLayout__Close_Button = styled.div`
+  font-size: 16px;
+  color: black;
+  cursor: pointer;
+`;
