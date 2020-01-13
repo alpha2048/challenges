@@ -63,7 +63,7 @@ export default connect((state) => state)(
       fetch('http://localhost:3001/payments')
         .then(function(resp) { return resp.json() })
         .then(function(data) {
-          self.setState({ totalAmount: summaryDonations(data) });
+          self.setState({ totalAmount: summaryDonations(data.filter((item) => (item.amount != null)).map((item) => (item.amount))) });
         })
     }
 
