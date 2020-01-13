@@ -7,15 +7,16 @@ import { summaryDonations } from './helpers';
 
 import {
   Title,
-  Row,
+  DonateMessage,
   CardLayout,
+  CardLayout__Row,
   AllDonationLayout,
   AllDonationLayout__Row,
 } from './App_markup';
 
 function createRowCard(self, coupleCardItem) {
   return (
-    <Row>
+    <CardLayout__Row>
       {coupleCardItem[0] && (
         <DonateCard
           name={coupleCardItem[0].name}
@@ -32,7 +33,7 @@ function createRowCard(self, coupleCardItem) {
           currency={coupleCardItem[1].currency}
           handlePay={(id, amount, currency) => handlePay(self, id, amount, currency).call()}/>
       )}
-    </Row>
+    </CardLayout__Row>
   )
 }
 
@@ -75,24 +76,18 @@ export default connect((state) => state)(
       for (let i = 0; i < cardList.length; i += divideLength){
         splitCardList[i] = cardList.slice(i, i + divideLength);
       }
-
       const cards = splitCardList.map(function(item) {
         return createRowCard(self, item);
       });
 
-      const style = {
-        color: 'red',
-        margin: '1em 0',
-        fontWeight: 'bold',
-        fontSize: '16px',
-        textAlign: 'center',
-      };
-      const message = this.props.message;
-
       return (
         <div>
-          <Title>Omise Tamboon React</Title>
-          <p style={style}>{message}</p>
+          <Title>
+            Omise Tamboon React
+          </Title>
+          <DonateMessage>
+            {this.props.message}
+          </DonateMessage>
           <AllDonationLayout>
             <AllDonationLayout__Row>
               <div>
