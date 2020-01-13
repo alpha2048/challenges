@@ -23,6 +23,10 @@ export default class DonateCard extends Component<> {
     this.state = {
       openPaymentScreen: false,
     };
+
+    this.onClickDonate = this.onClickDonate.bind(this);
+    this.onClickClosePay = this.onClickClosePay.bind(this);
+    this.onClickPay = this.onClickPay.bind(this);
   }
 
   componentDidMount() {
@@ -49,10 +53,11 @@ export default class DonateCard extends Component<> {
     });
   }
 
-  onClickPay() {
+  onClickPay(id, amount, currency) {
     if (!window.confirm('do you donate?')) return false;
 
     //donate processing
+    this.props.handlePay(id, amount, currency);
   }
 
   onClickClosePay() {
@@ -62,19 +67,16 @@ export default class DonateCard extends Component<> {
   }
 
   render() {
-    console.log(this.props);
-    const imageUrl = `../../public/images/${this.props.image}`;
-    console.log(imageUrl);
     return (
       <Layout>
         {this.state.openPaymentScreen && (
           <PaymentLayout>
             <PaymentLayout__Close_Layout>
-              <PaymentLayout__Close_Button onClick={this.onClickClosePay.bind(this)}>
+              <PaymentLayout__Close_Button onClick={() => this.onClickClosePay()}>
                   ×
               </PaymentLayout__Close_Button>
             </PaymentLayout__Close_Layout>
-            <Description__Button onClick={this.onClickPay.bind(this)}>
+            <Description__Button onClick={() => this.onClickPay(this.props.id, 10, this.props.currency)}>
                 Pay
             </Description__Button>
           </PaymentLayout>
@@ -85,7 +87,7 @@ export default class DonateCard extends Component<> {
             {this.props.name}
           </Description__Text>
 
-          <Description__Button onClick={this.onClickDonate.bind(this)}>
+          <Description__Button onClick={() => this.onClickDonate()}>
             donate
           </Description__Button>
         </Description>
@@ -99,4 +101,5 @@ DonateCard.propTypes = {
   name: PropTypes.string,
   image: PropTypes.string,
   currency: PropTypes.string,
+  handlePay: PropTypes.func,
 };

@@ -41,6 +41,32 @@ export default connect((state) => state)(
     }
 
     render() {
+      function handlePayFromDonateCard(id, amount, currency) {
+        fetch('http://localhost:3001/payments', {
+          method: 'POST',
+          body: `{ "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}" }`,
+        })
+          .then(function(resp) {
+            return resp.json(); })
+          .then(function() {
+            self.props.dispatch({
+              type: 'UPDATE_TOTAL_DONATE',
+              amount,
+            });
+            self.props.dispatch({
+              type: 'UPDATE_MESSAGE',
+              message: `Thanks for donate ${amount}!`,
+            });
+
+            setTimeout(function() {
+              self.props.dispatch({
+                type: 'UPDATE_MESSAGE',
+                message: '',
+              });
+            }, 2000);
+          });
+      }
+
       const self = this;
       const cards = this.state.charities.map(function(item, i) {
         const payments = [10, 20, 50, 100, 500].map((amount, j) => (
@@ -63,7 +89,7 @@ export default connect((state) => state)(
         // );
 
         return (
-          <DonateCard name={item.name} id={item.id} image={item.image} currency={item.currency}/>
+          <DonateCard name={item.name} id={item.id} image={item.image} currency={item.currency} handlePay={(id, amount, currency) => handlePayFromDonateCard(id, amount, currency)}/>
         )
       });
 
@@ -96,7 +122,8 @@ function handlePay(id, amount, currency) {
       method: 'POST',
       body: `{ "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}" }`,
     })
-      .then(function(resp) { return resp.json(); })
+      .then(function(resp) {
+        return resp.json(); })
       .then(function() {
         self.props.dispatch({
           type: 'UPDATE_TOTAL_DONATE',
