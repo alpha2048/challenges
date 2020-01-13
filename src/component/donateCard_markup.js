@@ -11,8 +11,9 @@ export const Layout = styled.div`
 
 export const Image = styled.img`
   max-width: 100%;
-  height: auto;
-  width: auto;
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
 `;
 
 export const Description = styled.div`

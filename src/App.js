@@ -54,13 +54,17 @@ export default connect((state) => state)(
           </label>
         ));
 
+        // return (
+        //   <Card key={i}>
+        //     <p>{item.name}</p>
+        //     {payments}
+        //     <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
+        //   </Card>
+        // );
+
         return (
-          <Card key={i}>
-            <p>{item.name}</p>
-            {payments}
-            <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
-          </Card>
-        );
+          <DonateCard name={item.name} id={item.id} image={item.image} currency={item.currency}/>
+        )
       });
 
       const style = {
@@ -79,7 +83,6 @@ export default connect((state) => state)(
           <p>All donations: {donate}</p>
           <p style={style}>{message}</p>
           {cards}
-          <DonateCard/>
         </div>
       );
     }

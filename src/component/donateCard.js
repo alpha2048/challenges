@@ -1,4 +1,5 @@
 import React, { Component} from 'react';
+import PropTypes from 'prop-types';
 import {
   Layout,
   Image,
@@ -10,7 +11,11 @@ import {
   Description__Button,
 } from './donateCard_markup';
 
-import image_id1 from '../../public/images/baan-kru-noi.jpg';
+import image1 from '../../public/images/baan-kru-noi.jpg';
+import image2 from '../../public/images/habitat-for-humanity-thailand.jpg';
+import image3 from '../../public/images/paper-ranger.jpg';
+import image4 from '../../public/images/makhampom-theater.jpg';
+import image5 from '../../public/images/thailand-association-of-the-blind.jpg';
 
 export default class DonateCard extends Component<> {
   constructor(props) {
@@ -21,6 +26,21 @@ export default class DonateCard extends Component<> {
   }
 
   componentDidMount() {
+  }
+
+  getImage(id: number) {
+    switch (id) {
+      case 1:
+        return image1;
+      case 2:
+        return image2;
+      case 3:
+        return image3;
+      case 4:
+        return image4;
+      case 5:
+        return image5;
+    }
   }
 
   onClickDonate() {
@@ -42,6 +62,9 @@ export default class DonateCard extends Component<> {
   }
 
   render() {
+    console.log(this.props);
+    const imageUrl = `../../public/images/${this.props.image}`;
+    console.log(imageUrl);
     return (
       <Layout>
         {this.state.openPaymentScreen && (
@@ -52,14 +75,14 @@ export default class DonateCard extends Component<> {
               </PaymentLayout__Close_Button>
             </PaymentLayout__Close_Layout>
             <Description__Button onClick={this.onClickPay.bind(this)}>
-                pay
+                Pay
             </Description__Button>
           </PaymentLayout>
         )}
-        <Image src={image_id1} alt="Logo" />
+        <Image src={this.getImage(this.props.id)}/>
         <Description>
           <Description__Text>
-            Baan Kru Noi
+            {this.props.name}
           </Description__Text>
 
           <Description__Button onClick={this.onClickDonate.bind(this)}>
@@ -70,3 +93,10 @@ export default class DonateCard extends Component<> {
     );
   }
 }
+
+DonateCard.propTypes = {
+  id: PropTypes.number,
+  name: PropTypes.string,
+  image: PropTypes.string,
+  currency: PropTypes.string,
+};
