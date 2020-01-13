@@ -41,7 +41,7 @@ export default connect((state) => state)(
 
       this.state = {
         charities: [],
-        selectedAmount: 10,
+        totalAmount: 0,
       };
     }
 
@@ -52,13 +52,15 @@ export default connect((state) => state)(
         .then(function(data) {
           self.setState({ charities: data }) });
 
+      this.updateTotalAmount();
+    }
+
+    updateTotalAmount() {
+      const self = this;
       fetch('http://localhost:3001/payments')
         .then(function(resp) { return resp.json() })
         .then(function(data) {
-          self.props.dispatch({
-            type: 'UPDATE_TOTAL_DONATE',
-            amount: summaryDonations(data.map((item) => (item.amount))),
-          });
+          self.setState({ totalAmount: summaryDonations(data) });
         })
     }
 
@@ -83,13 +85,12 @@ export default connect((state) => state)(
         fontSize: '16px',
         textAlign: 'center',
       };
-      const donate = this.props.donate;
       const message = this.props.message;
 
       return (
         <div>
           <Title>Omise Tamboon React</Title>
-          <p>All donations: {donate}</p>
+          <p>All donations: {this.state.totalAmount}</p>
           <p style={style}>{message}</p>
           <CardLayout>
             {cards}
@@ -112,10 +113,7 @@ function handlePay(self, id, amount, currency) {
       .then(function(resp) {
         return resp.json(); })
       .then(function() {
-        self.props.dispatch({
-          type: 'UPDATE_TOTAL_DONATE',
-          amount,
-        });
+        self.updateTotalAmount();
         self.props.dispatch({
           type: 'UPDATE_MESSAGE',
           message: `Thanks for donate ${amount}!`,
