@@ -24,11 +24,13 @@ export default class DonateCard extends Component<> {
     super(props);
     this.state = {
       openPaymentScreen: false,
+      donateAmount: 0,
     };
 
     this.onClickDonate = this.onClickDonate.bind(this);
     this.onClickClosePay = this.onClickClosePay.bind(this);
     this.onClickPay = this.onClickPay.bind(this);
+    this.onClickDonateAmount = this.onClickDonateAmount.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +51,12 @@ export default class DonateCard extends Component<> {
     }
   }
 
+  onClickDonateAmount(amount: number) {
+    this.setState({
+      donateAmount:amount,
+    });
+  }
+
   onClickDonate() {
     this.setState({
       openPaymentScreen: true,
@@ -58,13 +66,14 @@ export default class DonateCard extends Component<> {
   onClickPay(id, amount, currency) {
     if (!window.confirm('Do you accept to donate?')) return false;
 
-    //donate processing
     this.props.handlePay(id, amount, currency);
+    this.onClickClosePay();
   }
 
   onClickClosePay() {
     this.setState({
       openPaymentScreen: false,
+      donateAmount: 0,
     });
   }
 
@@ -74,9 +83,8 @@ export default class DonateCard extends Component<> {
         <input
           type="radio"
           name="payment"
-          onClick={function() {
-            self.setState({ selectedAmount: amount })
-          }} /> {amount}
+          onClick={() => this.onClickDonateAmount(amount)} /> 
+        {amount}
       </label>
     ));
 
@@ -95,9 +103,11 @@ export default class DonateCard extends Component<> {
             <PaymentLayout__Selector>
               {payments}
             </PaymentLayout__Selector>
-            <Description__Button onClick={() => this.onClickPay(this.props.id, 10, this.props.currency)}>
+            {this.state.donateAmount !== 0 && (
+              <Description__Button onClick={() => this.onClickPay(this.props.id, this.state.donateAmount, this.props.currency)}>
                 Pay
-            </Description__Button>
+              </Description__Button>
+            )}
           </PaymentLayout>
         )}
         <Image src={this.getImage(this.props.id)}/>
