@@ -15,6 +15,9 @@ function createRowCard(self, coupleCardItem) {
   function handlePayFromDonateCard(id, amount, currency) {
     fetch('http://localhost:3001/payments', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: `{ "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}" }`,
     })
       .then(function(resp) {
