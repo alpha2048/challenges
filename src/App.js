@@ -7,10 +7,10 @@ import { summaryDonations } from './helpers';
 
 import {
   Title,
-  Row
+  Row,
 } from './App_markup';
 
-function createRowCard(coupleCardItem) {
+function createRowCard(self, coupleCardItem) {
   function handlePayFromDonateCard(id, amount, currency) {
     fetch('http://localhost:3001/payments', {
       method: 'POST',
@@ -19,17 +19,17 @@ function createRowCard(coupleCardItem) {
       .then(function(resp) {
         return resp.json(); })
       .then(function() {
-        this.props.dispatch({
+        self.props.dispatch({
           type: 'UPDATE_TOTAL_DONATE',
           amount,
         });
-        this.props.dispatch({
+        self.props.dispatch({
           type: 'UPDATE_MESSAGE',
           message: `Thanks for donate ${amount}!`,
         });
 
         setTimeout(function() {
-          this.props.dispatch({
+          self.props.dispatch({
             type: 'UPDATE_MESSAGE',
             message: '',
           });
@@ -150,7 +150,7 @@ export default connect((state) => state)(
       }
 
       cards = splitCardList.map(function(item, i) {
-        return createRowCard(item);
+        return createRowCard(self, item);
       });
 
       const style = {
