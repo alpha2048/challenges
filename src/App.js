@@ -1,16 +1,63 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
 import DonateCard from './component/donateCard';
 
 import { summaryDonations } from './helpers';
 
+import {
+  Title,
+  Row
+} from './App_markup';
 
-const Card = styled.div`
-  margin: 10px;
-  border: 1px solid #ccc;
-`;
+function createRowCard(coupleCardItem) {
+  function handlePayFromDonateCard(id, amount, currency) {
+    fetch('http://localhost:3001/payments', {
+      method: 'POST',
+      body: `{ "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}" }`,
+    })
+      .then(function(resp) {
+        return resp.json(); })
+      .then(function() {
+        this.props.dispatch({
+          type: 'UPDATE_TOTAL_DONATE',
+          amount,
+        });
+        this.props.dispatch({
+          type: 'UPDATE_MESSAGE',
+          message: `Thanks for donate ${amount}!`,
+        });
+
+        setTimeout(function() {
+          this.props.dispatch({
+            type: 'UPDATE_MESSAGE',
+            message: '',
+          });
+        }, 2000);
+      });
+  }
+
+  return (
+    <Row>
+      {coupleCardItem[0] && (
+        <DonateCard
+          name={coupleCardItem[0].name}
+          id={coupleCardItem[0].id}
+          image={coupleCardItem[0].image}
+          currency={coupleCardItem[0].currency}
+          handlePay={(id, amount, currency) => handlePayFromDonateCard(id, amount, currency)}/>
+      )}
+      {coupleCardItem[1] && (
+        <DonateCard
+          name={coupleCardItem[1].name}
+          id={coupleCardItem[1].id}
+          image={coupleCardItem[1].image}
+          currency={coupleCardItem[1].currency}
+          handlePay={(id, amount, currency) => handlePayFromDonateCard(id, amount, currency)}/>
+      )}
+    </Row>
+  )
+}
 
 export default connect((state) => state)(
   class App extends Component {
@@ -49,17 +96,17 @@ export default connect((state) => state)(
           .then(function(resp) {
             return resp.json(); })
           .then(function() {
-            self.props.dispatch({
+            this.props.dispatch({
               type: 'UPDATE_TOTAL_DONATE',
               amount,
             });
-            self.props.dispatch({
+            this.props.dispatch({
               type: 'UPDATE_MESSAGE',
               message: `Thanks for donate ${amount}!`,
             });
 
             setTimeout(function() {
-              self.props.dispatch({
+              this.props.dispatch({
                 type: 'UPDATE_MESSAGE',
                 message: '',
               });
@@ -68,7 +115,7 @@ export default connect((state) => state)(
       }
 
       const self = this;
-      const cards = this.state.charities.map(function(item, i) {
+      let cards = this.state.charities.map(function(item, i) {
         const payments = [10, 20, 50, 100, 500].map((amount, j) => (
           <label key={j}>
             <input
@@ -82,7 +129,7 @@ export default connect((state) => state)(
 
         // return (
         //   <Card key={i}>
-        //     <p>{item.name}</p>
+        //     <p>{item .name}</p>
         //     {payments}
         //     <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
         //   </Card>
@@ -91,6 +138,19 @@ export default connect((state) => state)(
         return (
           <DonateCard name={item.name} id={item.id} image={item.image} currency={item.currency} handlePay={(id, amount, currency) => handlePayFromDonateCard(id, amount, currency)}/>
         )
+      });
+
+      const cardList = this.state.charities;
+      const divideLength = 2;
+      const splitCardList = [];
+
+      for (let i = 0; i < cardList.length; i += divideLength){
+        // 指定した個数ずつに分割する
+        splitCardList[i] = cardList.slice(i, i + divideLength);
+      }
+
+      cards = splitCardList.map(function(item, i) {
+        return createRowCard(item);
       });
 
       const style = {
@@ -105,7 +165,7 @@ export default connect((state) => state)(
 
       return (
         <div>
-          <h1>Tamboon React</h1>
+          <Title>Omise Tamboon React</Title>
           <p>All donations: {donate}</p>
           <p style={style}>{message}</p>
           {cards}
