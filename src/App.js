@@ -8,6 +8,7 @@ import { summaryDonations } from './helpers';
 import {
   Title,
   Row,
+  CardLayout,
 } from './App_markup';
 
 function createRowCard(self, coupleCardItem) {
@@ -168,7 +169,9 @@ export default connect((state) => state)(
           <Title>Omise Tamboon React</Title>
           <p>All donations: {donate}</p>
           <p style={style}>{message}</p>
-          {cards}
+          <CardLayout>
+            {cards}
+          </CardLayout>
         </div>
       );
     }
