@@ -12,35 +12,6 @@ import {
 } from './App_markup';
 
 function createRowCard(self, coupleCardItem) {
-  function handlePayFromDonateCard(id, amount, currency) {
-    fetch('http://localhost:3001/payments', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: `{ "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}" }`,
-    })
-      .then(function(resp) {
-        return resp.json(); })
-      .then(function() {
-        self.props.dispatch({
-          type: 'UPDATE_TOTAL_DONATE',
-          amount,
-        });
-        self.props.dispatch({
-          type: 'UPDATE_MESSAGE',
-          message: `Thanks for donate ${amount}!`,
-        });
-
-        setTimeout(function() {
-          self.props.dispatch({
-            type: 'UPDATE_MESSAGE',
-            message: '',
-          });
-        }, 2000);
-      });
-  }
-
   return (
     <Row>
       {coupleCardItem[0] && (
@@ -49,7 +20,7 @@ function createRowCard(self, coupleCardItem) {
           id={coupleCardItem[0].id}
           image={coupleCardItem[0].image}
           currency={coupleCardItem[0].currency}
-          handlePay={(id, amount, currency) => handlePayFromDonateCard(id, amount, currency)}/>
+          handlePay={(id, amount, currency) => handlePay(self, id, amount, currency).call()}/>
       )}
       {coupleCardItem[1] && (
         <DonateCard
@@ -57,7 +28,7 @@ function createRowCard(self, coupleCardItem) {
           id={coupleCardItem[1].id}
           image={coupleCardItem[1].image}
           currency={coupleCardItem[1].currency}
-          handlePay={(id, amount, currency) => handlePayFromDonateCard(id, amount, currency)}/>
+          handlePay={(id, amount, currency) => handlePay(self, id, amount, currency).call()}/>
       )}
     </Row>
   )
@@ -92,68 +63,16 @@ export default connect((state) => state)(
     }
 
     render() {
-      function handlePayFromDonateCard(id, amount, currency) {
-        fetch('http://localhost:3001/payments', {
-          method: 'POST',
-          body: `{ "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}" }`,
-        })
-          .then(function(resp) {
-            return resp.json(); })
-          .then(function() {
-            this.props.dispatch({
-              type: 'UPDATE_TOTAL_DONATE',
-              amount,
-            });
-            this.props.dispatch({
-              type: 'UPDATE_MESSAGE',
-              message: `Thanks for donate ${amount}!`,
-            });
-
-            setTimeout(function() {
-              this.props.dispatch({
-                type: 'UPDATE_MESSAGE',
-                message: '',
-              });
-            }, 2000);
-          });
-      }
-
       const self = this;
-      let cards = this.state.charities.map(function(item, i) {
-        const payments = [10, 20, 50, 100, 500].map((amount, j) => (
-          <label key={j}>
-            <input
-              type="radio"
-              name="payment"
-              onClick={function() {
-                self.setState({ selectedAmount: amount })
-              }} /> {amount}
-          </label>
-        ));
-
-        // return (
-        //   <Card key={i}>
-        //     <p>{item .name}</p>
-        //     {payments}
-        //     <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
-        //   </Card>
-        // );
-
-        return (
-          <DonateCard name={item.name} id={item.id} image={item.image} currency={item.currency} handlePay={(id, amount, currency) => handlePayFromDonateCard(id, amount, currency)}/>
-        )
-      });
-
       const cardList = this.state.charities;
       const divideLength = 2;
       const splitCardList = [];
 
       for (let i = 0; i < cardList.length; i += divideLength){
-        // 指定した個数ずつに分割する
         splitCardList[i] = cardList.slice(i, i + divideLength);
       }
 
-      cards = splitCardList.map(function(item, i) {
+      const cards = splitCardList.map(function(item) {
         return createRowCard(self, item);
       });
 
@@ -181,11 +100,13 @@ export default connect((state) => state)(
   }
 );
 
-function handlePay(id, amount, currency) {
-  const self = this;
+function handlePay(self, id, amount, currency) {
   return function() {
     fetch('http://localhost:3001/payments', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: `{ "charitiesId": ${id}, "amount": ${amount}, "currency": "${currency}" }`,
     })
       .then(function(resp) {
