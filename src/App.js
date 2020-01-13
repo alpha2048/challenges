@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import fetch from 'isomorphic-fetch';
+import DonateCard from './component/donateCard';
 
 import { summaryDonations } from './helpers';
 
@@ -53,13 +54,17 @@ export default connect((state) => state)(
           </label>
         ));
 
+        // return (
+        //   <Card key={i}>
+        //     <p>{item.name}</p>
+        //     {payments}
+        //     <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
+        //   </Card>
+        // );
+
         return (
-          <Card key={i}>
-            <p>{item.name}</p>
-            {payments}
-            <button onClick={handlePay.call(self, item.id, self.state.selectedAmount, item.currency)}>Pay</button>
-          </Card>
-        );
+          <DonateCard name={item.name} id={item.id} image={item.image} currency={item.currency}/>
+        )
       });
 
       const style = {

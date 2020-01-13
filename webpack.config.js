@@ -28,6 +28,14 @@ const config = {
           loader: 'babel-loader',
         },
       },
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+          },
+        ],
+      },
     ],
   },
 };
