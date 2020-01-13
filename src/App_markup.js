@@ -17,3 +17,16 @@ export const CardLayout = styled.div`
   padding-right: 32px;
   padding-left: 32px;
 `;
+
+export const AllDonationLayout = styled.div`
+  margin: 32px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 2px solid blue;
+`;
+
+export const AllDonationLayout__Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;

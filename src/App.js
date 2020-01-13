@@ -9,6 +9,8 @@ import {
   Title,
   Row,
   CardLayout,
+  AllDonationLayout,
+  AllDonationLayout__Row,
 } from './App_markup';
 
 function createRowCard(self, coupleCardItem) {
@@ -90,8 +92,17 @@ export default connect((state) => state)(
       return (
         <div>
           <Title>Omise Tamboon React</Title>
-          <p>All donations: {this.state.totalAmount}</p>
           <p style={style}>{message}</p>
+          <AllDonationLayout>
+            <AllDonationLayout__Row>
+              <div>
+                All donations
+              </div>
+              <div>
+                {this.state.totalAmount}
+              </div>
+            </AllDonationLayout__Row>
+          </AllDonationLayout>
           <CardLayout>
             {cards}
           </CardLayout>
