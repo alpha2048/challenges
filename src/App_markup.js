@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'styled-media-query';
 
 export const Title = styled.h1`
   text-align: center;
@@ -21,9 +22,16 @@ export const CardLayout = styled.div`
 export const CardLayout__Row = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: center;
   margin-top: 32px;
   margin-bottom: 32px;
+  
+  ${media.lessThan('medium')`
+    flex-direction: column;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  `}
 `;
 
 export const AllDonationLayout = styled.div`

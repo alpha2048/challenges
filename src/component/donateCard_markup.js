@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'styled-media-query';
 
 export const Layout = styled.div`
   position: relative;
@@ -7,6 +8,10 @@ export const Layout = styled.div`
   height: 310px;
   border-radius: 8px;
   box-shadow: 0 0 16px gray;
+  
+  ${media.lessThan('medium')`
+    margin-top: 32px;
+  `}
 `;
 
 export const Image = styled.img`
