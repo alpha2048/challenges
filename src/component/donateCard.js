@@ -9,6 +9,8 @@ import {
   Description,
   Description__Text,
   Description__Button,
+  PaymentLayout__Selector,
+  PaymentLayout__Title,
 } from './donateCard_markup';
 
 import image1 from '../../public/images/baan-kru-noi.jpg';
@@ -54,7 +56,7 @@ export default class DonateCard extends Component<> {
   }
 
   onClickPay(id, amount, currency) {
-    if (!window.confirm('do you donate?')) return false;
+    if (!window.confirm('Do you accept to donate?')) return false;
 
     //donate processing
     this.props.handlePay(id, amount, currency);
@@ -67,6 +69,17 @@ export default class DonateCard extends Component<> {
   }
 
   render() {
+    const payments = [10, 20, 50, 100, 500].map((amount, j) => (
+      <label key={j}>
+        <input
+          type="radio"
+          name="payment"
+          onClick={function() {
+            self.setState({ selectedAmount: amount })
+          }} /> {amount}
+      </label>
+    ));
+
     return (
       <Layout>
         {this.state.openPaymentScreen && (
@@ -76,6 +89,12 @@ export default class DonateCard extends Component<> {
                   ×
               </PaymentLayout__Close_Button>
             </PaymentLayout__Close_Layout>
+            <PaymentLayout__Title>
+              Select the amount to donate (USD)
+            </PaymentLayout__Title>
+            <PaymentLayout__Selector>
+              {payments}
+            </PaymentLayout__Selector>
             <Description__Button onClick={() => this.onClickPay(this.props.id, 10, this.props.currency)}>
                 Pay
             </Description__Button>

@@ -56,10 +56,26 @@ export const PaymentLayout = styled.div`
 export const PaymentLayout__Close_Layout = styled.div`
   display: flex;
   flex-direction: row-reverse;
+  width: 100%;
 `;
 
 export const PaymentLayout__Close_Button = styled.div`
   font-size: 16px;
   color: black;
   cursor: pointer;
+`;
+
+export const PaymentLayout__Title = styled.div`
+  color: gray;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 16px;
+`;
+
+export const PaymentLayout__Selector = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 16px;
+  margin-bottom: 16px;
 `;
