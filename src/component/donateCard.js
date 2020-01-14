@@ -36,19 +36,20 @@ export default class DonateCard extends Component<> {
   componentDidMount() {
   }
 
-  getImage(id: number) {
-    switch (id) {
-      case 1:
-        return image1;
-      case 2:
-        return image2;
-      case 3:
-        return image3;
-      case 4:
-        return image4;
-      case 5:
-        return image5;
+  getImage(imageUrl) {
+    if (imageUrl.includes('baan-kru-noi')) {
+      return image1;
+    } else if (imageUrl.includes('habitat-for-humanity-thailand')) {
+      return image2;
+    } else if (imageUrl.includes('paper-ranger')) {
+      return image3;
+    } else if (imageUrl.includes('makhampom-theater')) {
+      return image4;
+    } else if (imageUrl.includes('thailand-association-of-the-blind')) {
+      return image5;
     }
+
+    return null;
   }
 
   onClickDonateAmount(amount: number) {
@@ -110,7 +111,7 @@ export default class DonateCard extends Component<> {
             )}
           </PaymentLayout>
         )}
-        <Image src={this.getImage(this.props.id)}/>
+        <Image src={this.getImage(this.props.imageUrl)}/>
         <Description>
           <Description__Text>
             {this.props.name}
@@ -128,7 +129,7 @@ export default class DonateCard extends Component<> {
 DonateCard.propTypes = {
   id: PropTypes.number,
   name: PropTypes.string,
-  image: PropTypes.string,
+  imageUrl: PropTypes.string,
   currency: PropTypes.string,
   handlePay: PropTypes.func,
 };

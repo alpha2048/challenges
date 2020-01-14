@@ -21,7 +21,7 @@ function createRowCard(self, coupleCardItem) {
         <DonateCard
           name={coupleCardItem[0].name}
           id={coupleCardItem[0].id}
-          image={coupleCardItem[0].image}
+          imageUrl={coupleCardItem[0].image}
           currency={coupleCardItem[0].currency}
           handlePay={(id, amount, currency) => handlePay(self, id, amount, currency).call()}/>
       )}
@@ -29,7 +29,7 @@ function createRowCard(self, coupleCardItem) {
         <DonateCard
           name={coupleCardItem[1].name}
           id={coupleCardItem[1].id}
-          image={coupleCardItem[1].image}
+          imageUrl={coupleCardItem[1].image}
           currency={coupleCardItem[1].currency}
           handlePay={(id, amount, currency) => handlePay(self, id, amount, currency).call()}/>
       )}
