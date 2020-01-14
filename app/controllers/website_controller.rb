@@ -7,6 +7,7 @@ class WebsiteController < ApplicationController
     charity = Charity.find_by(id: params[:charity])
     omise_token = params[:omise_token]
     amount = params[:amount]
+    currency = params[:currency]
 
     if omise_token.present?
       @token = retrieve_token(omise_token)
@@ -14,18 +15,18 @@ class WebsiteController < ApplicationController
       @token = nil
     end
 
-    if @token && charity && amount.present? && amount.to_i > 20
+    if @token && charity && amount.present? && amount.to_i > 20 && currency
       if Rails.env.test?
         charge = OpenStruct.new(
             {
-                amount: amount.to_i * 100,
+                amount: toSubUnit(amount.to_i, currency),
                 paid: (amount.to_i != 999),
             })
       else
         charge = Omise::Charge.create(
             {
-                amount: amount.to_i * 100,
-                currency: "THB",
+                amount: toSubUnit(amount.to_i, currency),
+                currency: currency,
                 card: omise_token,
                 description: "Donation to #{charity.name} [#{charity.id}]",
             })

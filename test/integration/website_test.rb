@@ -9,7 +9,7 @@ class WebsiteTest < ActionDispatch::IntegrationTest
 
   test "that someone can't donate to no charity" do
     post(donate_path, params: {
-           amount: "100", omise_token: "tokn_X", charity: ""
+           amount: "100", omise_token: "tokn_X", charity: "", currency: "THB",
          })
 
     assert_template :index
@@ -19,7 +19,7 @@ class WebsiteTest < ActionDispatch::IntegrationTest
   test "that someone can't donate 0 to a charity" do
     charity = charities(:children)
     post(donate_path, params: {
-           amount: "0", omise_token: "tokn_X", charity: charity.id
+           amount: "0", omise_token: "tokn_X", charity: charity.id, currency: "THB",
          })
 
     assert_template :index
@@ -29,7 +29,7 @@ class WebsiteTest < ActionDispatch::IntegrationTest
   test "that someone can't donate less than 20 to a charity" do
     charity = charities(:children)
     post(donate_path, params: {
-           amount: "19", omise_token: "tokn_X", charity: charity.id
+           amount: "19", omise_token: "tokn_X", charity: charity.id, currency: "THB",
          })
 
     assert_template :index
@@ -39,7 +39,7 @@ class WebsiteTest < ActionDispatch::IntegrationTest
   test "that someone can't donate without a token" do
     charity = charities(:children)
     post(donate_path, params: {
-           amount: "100", charity: charity.id
+           amount: "100", charity: charity.id, currency: "THB",
          })
 
     assert_template :index
@@ -52,7 +52,7 @@ class WebsiteTest < ActionDispatch::IntegrationTest
     expected_total = initial_total + (100 * 100)
 
     post(donate_path, params: {
-           amount: "100", omise_token: "tokn_X", charity: charity.id
+           amount: "100", omise_token: "tokn_X", charity: charity.id, currency: "THB",
          })
     follow_redirect!
 
@@ -66,7 +66,7 @@ class WebsiteTest < ActionDispatch::IntegrationTest
 
     # 999 is used to set paid as false
     post(donate_path, params: {
-           amount: "999", omise_token: "tokn_X", charity: charity.id
+           amount: "999", omise_token: "tokn_X", charity: charity.id, currency: "THB",
          })
 
     assert_template :index
@@ -79,7 +79,7 @@ class WebsiteTest < ActionDispatch::IntegrationTest
     expected_total = initial_total + (100 * 100)
 
     post(donate_path, params: {
-           amount: "100", omise_token: "tokn_X", charity: "random"
+           amount: "100", omise_token: "tokn_X", charity: "random", currency: "THB",
          })
     follow_redirect!
 
