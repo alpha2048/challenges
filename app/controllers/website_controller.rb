@@ -3,6 +3,17 @@ class WebsiteController < ApplicationController
     @token = nil
   end
 
+
+  # [param]
+  # - charity : number or "random" (string) is random charity id
+  # - omise_token : string
+  # - amount : number
+  # - currency : string
+  #
+  # Example
+  #   post(donate_path, params: {
+  #     amount: "100", omise_token: "tokn_X", charity: charity.id, currency: "THB",
+  #   })
   def donate
     charityParam = params[:charity]
     if charityParam
