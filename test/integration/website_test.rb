@@ -46,6 +46,28 @@ class WebsiteTest < ActionDispatch::IntegrationTest
     assert_equal t("website.donate.failure"), flash.now[:alert]
   end
 
+  test "that someone can't donate without currency" do
+    charity = charities(:children)
+
+    post(donate_path, params: {
+        amount: "100", omise_token: "tokn_X", charity: charity.id,
+    })
+
+    assert_template :index
+    assert_equal t("website.donate.failure"), flash.now[:alert]
+  end
+
+  test "that someone can't donate with unknown currency" do
+    charity = charities(:children)
+
+    post(donate_path, params: {
+        amount: "100", omise_token: "tokn_X", charity: charity.id, currency: "QQQQ",
+    })
+
+    assert_template :index
+    assert_equal t("website.donate.failure"), flash.now[:alert]
+  end
+
   test "that someone can donate to a charity" do
     charity = charities(:children)
     initial_total = charity.total

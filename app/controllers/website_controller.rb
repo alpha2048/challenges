@@ -16,6 +16,14 @@ class WebsiteController < ApplicationController
     end
 
     if @token && charity && amount.present? && amount.to_i > 20 && currency
+      begin
+        Money::Currency.wrap(currency)
+      rescue
+        flash.now.alert = t(".failure")
+        render :index
+        return
+      end
+
       if Rails.env.test?
         charge = OpenStruct.new(
             {
