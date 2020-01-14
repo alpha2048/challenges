@@ -4,7 +4,14 @@ class WebsiteController < ApplicationController
   end
 
   def donate
-    charity = Charity.find_by(id: params[:charity])
+    charityParam = params[:charity]
+    if charityParam
+      charity = Charity.find_by(id: charityParam)
+      if charityParam.include? "random"
+        charity = Charity.where('id >= ?', rand(Charity.first.id..Charity.last.id)).first
+      end
+    end
+
     omise_token = params[:omise_token]
     amount = params[:amount]
     currency = params[:currency]

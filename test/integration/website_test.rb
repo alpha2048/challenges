@@ -16,6 +16,15 @@ class WebsiteTest < ActionDispatch::IntegrationTest
     assert_equal t("website.donate.failure"), flash.now[:alert]
   end
 
+  test "that someone can't donate to null charity" do
+    post(donate_path, params: {
+        amount: "100", omise_token: "tokn_X", currency: "THB",
+    })
+
+    assert_template :index
+    assert_equal t("website.donate.failure"), flash.now[:alert]
+  end
+
   test "that someone can't donate 0 to a charity" do
     charity = charities(:children)
     post(donate_path, params: {
